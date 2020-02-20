@@ -7,23 +7,23 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE:
-      MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE: "${DB_NAME}"
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
 
   wp:
     depends_on:
       - db
     image: wordpress:latest
     volumes:
-      - ./wp/:/var/www/html/
-      - ./jps/:/var/www/html/wp-content/themes/jps # Jean-Paule Sartre (https://github.com/fedtti/jps)
+      - ./wp/:/var/www/html
+      - ./jps/:/var/www/html/wp-content/themes/jps # Jean-Paul Sartre (https://github.com/fedtti/jps)
     ports:
       - "8001:80"
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_NAME:
+      WORDPRESS_DB_NAME: "${DB_NAME}"
       WORDPRESS_DB_USER: root
-      WORDPRESS_DB_PASSWORD:
+      WORDPRESS_DB_PASSWORD: "${DB_PASSWORD}"
 
 volumes:
   db_data:
