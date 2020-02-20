@@ -1,11 +1,12 @@
-version: 3.7
+version: "3.7"
 services:
 
   db:
     image: mysql:latest
-    volumes: db_data:/var/lib/mysql
+    volumes:
+      - "db_data:/var/lib/mysql"
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_DATABASE: "${DB_NAME}"
       MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
@@ -15,8 +16,8 @@ services:
       - db
     image: wordpress:latest
     volumes:
-      - ./wp/:/var/www/html
-      - ./jps/:/var/www/html/wp-content/themes/jps # Jean-Paul Sartre (https://github.com/fedtti/jps)
+      - "./wp/:/var/www/html"
+      - "./jps/:/var/www/html/wp-content/themes/jps" # Jean-Paul Sartre (https://github.com/fedtti/jps)
     ports:
       - "8001:80"
     environment:
