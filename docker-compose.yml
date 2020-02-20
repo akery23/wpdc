@@ -3,28 +3,29 @@ services:
 
   db:
     image: mysql:latest
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    restart: always
     volumes:
-      - "db_data:/var/lib/mysql"
-    ports:
-      - "3307:3306"
+      - db_data:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: "${DB_NAME}"
-      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_DATABASE: qmnmdit
+      MYSQL_ROOT_PASSWORD: password
 
   wp:
     depends_on:
       - db
+    links:
+      - db
     image: wordpress:latest
+    restart: always
     volumes:
-      - "./wp/:/var/www/html"
-      - "./jps/:/var/www/html/wp-content/themes/jps" # Jean-Paul Sartre (https://github.com/fedtti/jps)
-    ports:
-      - "8001:80"
+      - "../wp/:/var/www/html"
+      - "../jps/:/var/www/html/wp-content/themes/jps" # Jean-Paul Sartre (https://github.com/fedtti/jps)
     environment:
-      WORDPRESS_DB_HOST: localhost
-      WORDPRESS_DB_NAME: "${DB_NAME}"
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: qmnmdit
       WORDPRESS_DB_USER: root
-      WORDPRESS_DB_PASSWORD: "${DB_PASSWORD}"
+      WORDPRESS_DB_PASSWORD: password
 
 volumes:
   db_data:
