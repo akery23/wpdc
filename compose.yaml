@@ -1,9 +1,9 @@
-version: "3.7"
+version: "3.9"
 services:
 
   db:
     image: mysql:latest
-  # image: mariadb:latest
+  # image: mariadb:latest # MariaDB
     command: mysqld --default-authentication-plugin=mysql_native_password
     restart: always
     volumes:
@@ -38,4 +38,4 @@ services:
       WORDPRESS_DB_PASSWORD: password
 
 volumes:
-  db_data: {}
+  db_data:
